@@ -19,7 +19,7 @@ namespace ConsoleApp1.QuotationSystems
 
             dynamic response = new ExpandoObject();
             response.Price = 234.56M;
-            response.HasPrice = true;
+            response.IsSuccess = true;
             response.Name = "qewtrywrh";
             response.Tax = 234.56M * 0.12M;
 
