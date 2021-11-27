@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Engines\IPriceEngine.cs" />
     <Compile Include="Models\PriceRequest.cs" />
+    <Compile Include="Models\PriceResponse.cs" />
     <Compile Include="Models\RiskData.cs" />
     <Compile Include="Engines\PriceEngine.cs" />
     <Compile Include="Program.cs" />

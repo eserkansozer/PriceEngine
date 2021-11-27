@@ -16,20 +16,16 @@ namespace ConsoleApp1
 
             var request = new PriceRequest(new RiskData("John", "Smith", 500, "Cool New Phone", DateTime.Parse("1980-01-01")));
 
-            decimal tax = 0;
-            string insurer = "";
-            string error = "";
-
             var priceEngine = new PriceEngine();
-            var price = priceEngine.GetPrice(request, out tax, out insurer);
 
-            if (price == -1)
+            try
             {
-                Console.WriteLine(String.Format("There was an error - {0}", error));
+                var response = priceEngine.GetPrice(request);
+                Console.WriteLine(String.Format("You price is {0}, from insurer: {1}. This includes tax of {2}", response.Price, response.InsurerName, response.Tax));
             }
-            else
+            catch(Exception ex)
             {
-                Console.WriteLine(String.Format("You price is {0}, from insurer: {1}. This includes tax of {2}", price, insurer, tax));
+                Console.WriteLine(String.Format("There was an error - {0}", ex.Message));
             }
 
             Console.WriteLine("Press any key to exit");

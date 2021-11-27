@@ -8,15 +8,10 @@ namespace ConsoleApp1.Engines
     public class PriceEngine : IPriceEngine
     {
         //pass request with risk data with details of a gadget, return the best price retrieved from 3 external quotation engines
-        public decimal GetPrice(PriceRequest request, out decimal tax, out string insurerName)
+        public PriceResponse GetPrice(PriceRequest request)
         {
-            //initialise return variables
-            tax = 0;
-            insurerName = "";
-
             //validation
             ValidatePriceRequest(request);
-
 
             //now call 3 external system and get the best price
             decimal price = 0;
@@ -36,9 +31,7 @@ namespace ConsoleApp1.Engines
                 dynamic system1Response = system1.GetPrice(systemRequest1);
                 if (system1Response.IsSuccess)
                 {
-                    price = system1Response.Price;
-                    insurerName = system1Response.Name;
-                    tax = system1Response.Tax;
+                    return new PriceResponse(system1Response.Price, system1Response.Tax, system1Response.Name);
                 }
             }
 
@@ -57,9 +50,7 @@ namespace ConsoleApp1.Engines
                 dynamic system2Response = system2.GetPrice(systemRequest2);
                 if (system2Response.HasPrice && system2Response.Price < price)
                 {
-                    price = system2Response.Price;
-                    insurerName = system2Response.Name;
-                    tax = system2Response.Tax;
+                    return new PriceResponse(system2Response.Price, system2Response.Tax, system2Response.Name);
                 }
             }
 
@@ -76,17 +67,10 @@ namespace ConsoleApp1.Engines
             var system3Response = system3.GetPrice(systemRequest3);
             if (system3Response.IsSuccess && system3Response.Price < price)
             {
-                price = system3Response.Price;
-                insurerName = system3Response.Name;
-                tax = system3Response.Tax;
+                return new PriceResponse(system3Response.Price, system3Response.Tax, system3Response.Name);
             }
 
-            if (price == 0)
-            {
-                price = -1;
-            }
-
-            return price;
+            return null;
         }
 
         private static void ValidatePriceRequest(PriceRequest request)
