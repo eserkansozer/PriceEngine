@@ -1,15 +1,11 @@
 ﻿using ConsoleApp1.Models;
 using ConsoleApp1.QuotationSystems;
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1.Engines
 {
-    public class PriceEngine
+    public class PriceEngine : IPriceEngine
     {
         //pass request with risk data with details of a gadget, return the best price retrieved from 3 external quotation engines
         public decimal GetPrice(PriceRequest request, out decimal tax, out string insurerName, out string errorMessage)

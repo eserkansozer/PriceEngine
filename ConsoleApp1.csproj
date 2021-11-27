@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engines\IPriceEngine.cs" />
     <Compile Include="Models\PriceRequest.cs" />
     <Compile Include="Models\RiskData.cs" />
     <Compile Include="Engines\PriceEngine.cs" />
