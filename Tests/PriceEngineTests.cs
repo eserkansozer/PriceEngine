@@ -113,7 +113,7 @@ namespace ConsoleApp1.Tests
         }
 
         [Test]
-        public void IfRiskDataHasCertainMakeDoCallQuotationSystem()
+        public void IfRiskDataHasCertainMakeDoCallQuotationSystem2()
         {
             var riskData = new RiskData("John", "Smith", 500, "examplemake1", null);
             var engine = new PriceEngine(_quotationSytems);
@@ -123,7 +123,7 @@ namespace ConsoleApp1.Tests
         }
 
         [Test]
-        public void IfRiskDataHasNotCertainMakeDontCallQuotationSystem()
+        public void IfRiskDataHasNotCertainMakeDontCallQuotationSystem2()
         {
             var riskData = new RiskData("John", "Smith", 500, "examplemake101", null);
             var engine = new PriceEngine(_quotationSytems);
