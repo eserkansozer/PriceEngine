@@ -36,7 +36,8 @@ namespace ConsoleApp1.Engines
             }
 
             //system 2 only quotes for some makes
-            if (request.RiskData.Make == "examplemake1" || request.RiskData.Make == "examplemake2" ||
+            if (request.RiskData.Make == "examplemake1" || 
+                request.RiskData.Make == "examplemake2" ||
                 request.RiskData.Make == "examplemake3")
             {
                 var response2 = QuoteExternalSystem(_quotationSytems[1], request);
@@ -58,15 +59,7 @@ namespace ConsoleApp1.Engines
 
         private dynamic QuoteExternalSystem(BaseQuotationSystem system, PriceRequest request)
         {          
-
-            dynamic systemRequest = new ExpandoObject();
-            systemRequest.FirstName = request.RiskData.FirstName;
-            systemRequest.Surname = request.RiskData.LastName;
-            systemRequest.DOB = request.RiskData.DOB;
-            systemRequest.Make = request.RiskData.Make;
-            systemRequest.Amount = request.RiskData.Value;
-
-            return system.GetPrice(systemRequest);
+            return system.GetPrice(request);
         }
 
         private void ValidatePriceRequest(PriceRequest request)

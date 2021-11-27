@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using ConsoleApp1.Engines;
 using ConsoleApp1.Models;
 using ConsoleApp1.QuotationSystems;
+using Moq;
 using NUnit.Framework;
 
 namespace ConsoleApp1.Tests
@@ -10,14 +12,39 @@ namespace ConsoleApp1.Tests
     public class PriceEngineTests
     {
         private List<BaseQuotationSystem> _quotationSytems;
+        private Mock<BaseQuotationSystem> mockSystem1, mockSystem2, mockSystem3;
 
         [SetUp]
         public void Setup()
         {
+            mockSystem1 = new Mock<BaseQuotationSystem>();
+            dynamic response1 = new ExpandoObject();
+            response1.Price = 123.45M;
+            response1.IsSuccess = true;
+            response1.Name = "Test Name";
+            response1.Tax = 123.45M * 0.12M;
+            mockSystem1.Setup(s => s.GetPrice(It.IsAny<PriceRequest>())).Returns((PriceRequest priceRequest) => response1);
+
+            mockSystem2 = new Mock<BaseQuotationSystem>();
+            dynamic response2 = new ExpandoObject();
+            response2.Price = 234.56M;
+            response2.IsSuccess = true;
+            response2.Name = "qewtrywrh";
+            response2.Tax = 234.56M * 0.12M;
+            mockSystem2.Setup(s => s.GetPrice(It.IsAny<PriceRequest>())).Returns((PriceRequest priceRequest) => response2);
+
+            mockSystem3 = new Mock<BaseQuotationSystem>();
+            dynamic response3 = new ExpandoObject();
+            response3.Price = 92.67M;
+            response3.IsSuccess = true;
+            response3.Name = "zxcvbnm";
+            response3.Tax = 92.67M * 0.12M;
+            mockSystem3.Setup(s => s.GetPrice(It.IsAny<PriceRequest>())).Returns((PriceRequest priceRequest) => response3);
+
             _quotationSytems = new List<BaseQuotationSystem> { 
-                new QuotationSystem1("http://quote-system-1.com", "1234"),
-                new QuotationSystem2("http://quote-system-2.com", "1235"),
-                new QuotationSystem3("http://quote-system-3.com", "100")
+                mockSystem1.Object,
+                mockSystem2.Object,
+                mockSystem3.Object
             };
         }
 
@@ -73,6 +100,36 @@ namespace ConsoleApp1.Tests
             Assert.That(result.InsurerName, Is.EqualTo("zxcvbnm"));
             Assert.That(result.Price, Is.EqualTo(92.67M));
             Assert.That(result.Tax, Is.EqualTo(92.67M * 0.12M));
+        }
+
+        [Test]
+        public void IfRiskDataHasDOBNullThenDontCallQuotationSystem1()
+        {
+            var riskData = new RiskData("John", "Smith", 500, "Cool New Phone", null);
+            var engine = new PriceEngine(_quotationSytems);
+            var result = engine.GetPrice(new PriceRequest(riskData));
+
+            mockSystem1.Verify(m=> m.GetPrice(It.IsAny<PriceRequest>()), Times.Never);
+        }
+
+        [Test]
+        public void IfRiskDataHasCertainMakeDoCallQuotationSystem()
+        {
+            var riskData = new RiskData("John", "Smith", 500, "examplemake1", null);
+            var engine = new PriceEngine(_quotationSytems);
+            var result = engine.GetPrice(new PriceRequest(riskData));
+
+            mockSystem2.Verify(m => m.GetPrice(It.IsAny<PriceRequest>()), Times.Once);
+        }
+
+        [Test]
+        public void IfRiskDataHasNotCertainMakeDontCallQuotationSystem()
+        {
+            var riskData = new RiskData("John", "Smith", 500, "examplemake101", null);
+            var engine = new PriceEngine(_quotationSytems);
+            var result = engine.GetPrice(new PriceRequest(riskData));
+
+            mockSystem2.Verify(m => m.GetPrice(It.IsAny<PriceRequest>()), Times.Never);
         }
     }
 }
