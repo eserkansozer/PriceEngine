@@ -43,9 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PriceEngine.cs" />
+    <Compile Include="Models\PriceRequest.cs" />
+    <Compile Include="Models\RiskData.cs" />
+    <Compile Include="Engines\PriceEngine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuotationSystems\BaseQuotationSystem.cs" />
+    <Compile Include="QuotationSystems\IQuotationSystem.cs" />
+    <Compile Include="QuotationSystems\QuotationSystem1.cs" />
+    <Compile Include="QuotationSystems\QuotationSystem2.cs" />
+    <Compile Include="QuotationSystems\QuotationSystem3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

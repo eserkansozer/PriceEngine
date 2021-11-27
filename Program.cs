@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ConsoleApp1.Engines;
+using ConsoleApp1.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +14,7 @@ namespace ConsoleApp1
         {
             //SNIP - collect input (risk data from the user)
 
-            var request = new PriceRequest()
-            {
-                RiskData = new RiskData() //hardcoded here, but would normally be from user input above
-                {
-                    DOB = DateTime.Parse("1980-01-01"),
-                    FirstName = "John",
-                    LastName = "Smith",
-                    Make = "Cool New Phone",
-                    Value = 500
-                }
-            };
+            var request = new PriceRequest(new RiskData("John", "Smith", 500, "Cool New Phone", DateTime.Parse("1980-01-01")));
 
             decimal tax = 0;
             string insurer = "";

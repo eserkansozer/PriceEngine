@@ -1,0 +1,7 @@
+C:\Projects\HH\PriceEngine\bin\Debug\ConsoleApp1.exe.config
+C:\Projects\HH\PriceEngine\bin\Debug\ConsoleApp1.exe
+C:\Projects\HH\PriceEngine\bin\Debug\ConsoleApp1.pdb
+C:\Projects\HH\PriceEngine\obj\Debug\ConsoleApp1.csproj.AssemblyReference.cache
+C:\Projects\HH\PriceEngine\obj\Debug\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Projects\HH\PriceEngine\obj\Debug\ConsoleApp1.exe
+C:\Projects\HH\PriceEngine\obj\Debug\ConsoleApp1.pdb
