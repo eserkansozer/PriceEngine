@@ -21,7 +21,7 @@ namespace ConsoleApp1
             string error = "";
 
             var priceEngine = new PriceEngine();
-            var price = priceEngine.GetPrice(request, out tax, out insurer, out error);
+            var price = priceEngine.GetPrice(request, out tax, out insurer);
 
             if (price == -1)
             {

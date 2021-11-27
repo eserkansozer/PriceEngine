@@ -8,38 +8,14 @@ namespace ConsoleApp1.Engines
     public class PriceEngine : IPriceEngine
     {
         //pass request with risk data with details of a gadget, return the best price retrieved from 3 external quotation engines
-        public decimal GetPrice(PriceRequest request, out decimal tax, out string insurerName, out string errorMessage)
+        public decimal GetPrice(PriceRequest request, out decimal tax, out string insurerName)
         {
             //initialise return variables
             tax = 0;
             insurerName = "";
-            errorMessage = "";
 
             //validation
-            if (request.RiskData == null)
-            {
-                errorMessage = "Risk Data is missing";
-                return -1;
-            }
-
-            if (String.IsNullOrEmpty(request.RiskData.FirstName))
-            {
-                errorMessage = "First name is required";
-                return -1;
-            }
-
-            if (String.IsNullOrEmpty(request.RiskData.LastName))
-            {
-                errorMessage = "Surname is required";
-                return -1;
-            }
-
-            if (request.RiskData.Value == 0)
-            {
-                errorMessage = "Value is required";
-
-                return -1;
-            }
+            ValidatePriceRequest(request);
 
 
             //now call 3 external system and get the best price
@@ -111,6 +87,35 @@ namespace ConsoleApp1.Engines
             }
 
             return price;
+        }
+
+        private static void ValidatePriceRequest(PriceRequest request)
+        {
+            if (request.RiskData == null)
+            {
+                var errorMessage = "Risk Data is missing";
+                throw new ApplicationException(errorMessage);
+            }
+
+            if (String.IsNullOrEmpty(request.RiskData.FirstName))
+            {
+                var errorMessage = "First name is required";
+                throw new ApplicationException(errorMessage);
+
+            }
+
+            if (String.IsNullOrEmpty(request.RiskData.LastName))
+            {
+                var errorMessage = "Surname is required";
+                throw new ApplicationException(errorMessage);
+
+            }
+
+            if (request.RiskData.Value == 0)
+            {
+                var errorMessage = "Value is required";
+                throw new ApplicationException(errorMessage);
+            }
         }
     }
 }
